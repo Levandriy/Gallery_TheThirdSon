@@ -1,0 +1,44 @@
+﻿<Window x:Class="Gallery_TheThirdSon.Forms.SaveForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gallery_TheThirdSon.Forms"
+        mc:Ignorable="d"
+        Title="SaveForm" Height="450" Width="800" Loaded="Window_Loaded">
+    <Grid>
+        <Rectangle Fill="Black"/>
+        <ScrollViewer Margin="0,0,0,60">
+            <ItemsControl x:Name="SavesControl" ItemsSource="{Binding}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <RadioButton x:Name="Select" Checked="Select_Checked" GroupName="Saves" Style="{DynamicResource SaveLoadRBStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Title}" Style="{DynamicResource DefaultTextBlockStyle}"/>
+                                <TextBlock Text="{Binding DateCreated, StringFormat=Created: \{0:dd.MM.yyyy\}}" Style="{DynamicResource DefaultTextBlockStyle}"/>
+                                <TextBlock Text="{Binding DateUpdated, StringFormat=Updated: \{0:dd.MM.yyyy\}}" Style="{DynamicResource DefaultTextBlockStyle}"/>
+                            </StackPanel>
+                        </RadioButton>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="Title" Grid.ColumnSpan="2" Style="{DynamicResource SrcTBStyle}"/>
+            <WrapPanel Grid.Column="2" HorizontalAlignment="Center">
+                <Button x:Name="LoadButton" Content="Load" Click="LoadButton_Click" Margin="10" Padding="20,0,20,0" Style="{DynamicResource DefaultButtonStyle}"/>
+                <Button x:Name="SaveButton" Content="Save" Click="SaveButton_Click" Margin="10" Padding="20,0,20,0" Style="{DynamicResource DefaultButtonStyle}"/>
+            </WrapPanel>
+        </Grid>
+    </Grid>
+</Window>

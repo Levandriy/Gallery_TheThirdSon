@@ -1,0 +1,57 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="AddPhotoIcon.png" />
+    <None Remove="arrow-next-right-icon.png" />
+    <None Remove="arrow-previous-left-icon.png" />
+    <None Remove="close-line-icon.png" />
+    <None Remove="download-install-line-icon.png" />
+    <None Remove="EditIcon.png" />
+    <None Remove="plus-line-icon.png" />
+    <None Remove="RemoveIcon.png" />
+    <None Remove="upload-outbox-line-icon.png" />
+    <None Remove="Windows\AddTagIcon.png" />
+    <None Remove="Windows\Full.png" />
+    <None Remove="Windows\RemoveLabelIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="7.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="7.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="7.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="AddPhotoIcon.png" />
+    <Resource Include="arrow-next-right-icon.png" />
+    <Resource Include="arrow-previous-left-icon.png" />
+    <Resource Include="close-line-icon.png" />
+    <Resource Include="download-install-line-icon.png" />
+    <Resource Include="EditIcon.png" />
+    <Resource Include="plus-line-icon.png" />
+    <Resource Include="RemoveIcon.png" />
+    <Resource Include="upload-outbox-line-icon.png" />
+    <Resource Include="Windows\AddTagIcon.png" />
+    <Resource Include="Windows\Full.png" />
+    <Resource Include="Windows\RemoveLabelIcon.png" />
+  </ItemGroup>
+
+</Project>
