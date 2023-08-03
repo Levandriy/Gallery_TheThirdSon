@@ -47,6 +47,7 @@ namespace Gallery_TheThirdSon
                         join images in App.Context.Images on savelist.Image equals images.Id
                         select images;
             CurrentList = query.ToList();
+            WindowGrid.DataContext = CurrentList[0];
             ItemsGrid.ItemsSource = null;
             ItemsGrid.ItemsSource = CurrentList;
         }
@@ -111,7 +112,7 @@ namespace Gallery_TheThirdSon
                         var img = check.FirstOrDefault();
                         if (CurrentList.Contains(img))
                         {
-                            MessageBox.Show("Изображение уже в галерее");
+                            MessageBox.Show("Image already in the gallery");
                         }
                         else
                         {
@@ -183,11 +184,12 @@ namespace Gallery_TheThirdSon
             {
                 Load();
             }
+            //SavesControl.ItemsSource = App.Context.Saves.ToList();
         }
 
         private void RemoveImageButton_Click(object sender, RoutedEventArgs e)
         {
-            var img = App.Context.Images.Find(CurrentImage.Id);
+            var img = CurrentImage;
             if (img != null)
             {
                 Debug.WriteLine($"Removing: {img.Id}");
@@ -234,6 +236,148 @@ namespace Gallery_TheThirdSon
                                join tag in App.Context.Tags on tags.Tag equals tag.Id
                                select tag).ToList().Take(3);
             TagsCollection.Collection = tagsofImage;
+        }
+
+        public static Models.SaveModel LocalSelected { get; set; }
+
+        //private void SaveButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (LocalSelected != null)
+        //    {
+        //        if (LocalSelected.Title != Title.Text)
+        //        {
+        //            LocalSelected = new()
+        //            {
+        //                Title = Title.Text,
+        //                DateUpdated = DateTime.Now,
+        //            };
+        //            App.Context.Saves.Add(LocalSelected);
+        //        }
+        //        else
+        //        {
+        //            LocalSelected.DateUpdated = DateTime.Now;
+        //            App.Context.Saves.Update(LocalSelected);
+        //        }
+        //        var mysavelist = App.Context.SaveLists.Where(x => x.Save == LocalSelected.Id).ToList();
+        //        App.Context.SaveLists.RemoveRange(mysavelist);
+        //    }
+        //    else
+        //    {
+        //        LocalSelected = new()
+        //        {
+        //            Title = Title.Text,
+        //            DateUpdated = DateTime.Now
+        //        };
+        //        App.Context.Saves.Add(LocalSelected);
+        //    }
+        //    foreach (var item in CurrentList)
+        //    {
+        //        if (App.Context.Images.Any(x => x.Data == item.Data))
+        //        {
+        //            Debug.WriteLine($"Trying to update {item.Title}");
+        //            var id = App.Context.Images.Where(x => x.Data == item.Data).Select(x => x.Id).FirstOrDefault();
+        //            Debug.WriteLine($"This item has id {item.Id}");
+        //            item.Id = id;
+        //            Debug.WriteLine($"But in the DataBase its id is {id}");
+        //            App.Context.Images.Update(item);
+        //        }
+        //        else
+        //        {
+        //            Debug.WriteLine($"Trying to add {item.Title}");
+        //            App.Context.Images.Add(item);
+        //        }
+        //        var saveList = new Models.SavesList()
+        //        {
+        //            Save = LocalSelected.Id,
+        //            Image = item.Id
+        //        };
+        //        App.Context.SaveLists.Add(saveList);
+        //    }
+        //    App.Context.SaveChanges();
+        //    MessageBox.Show($"{LocalSelected.Title} saved!");
+        //    Load(LocalSelected);
+        //    //MainTabControl.SelectedIndex = 0;
+        //    //SavesControl.ItemsSource = App.Context.Saves.ToList();
+        //}
+
+        //private void Select_Checked(object sender, RoutedEventArgs e)
+        //{
+        //    var button = sender as RadioButton;
+        //    var save = button.DataContext as Models.SaveModel;
+        //    LocalSelected = save;
+        //    Title.Text = save.Title;
+        //    var query = from s in App.Context.Saves
+        //                where s.Id == save.Id
+        //                join savelist in App.Context.SaveLists on s.Id equals savelist.Save
+        //                join images in App.Context.Images on savelist.Image equals images.Id
+        //                select images;
+        //    //SaveImages.ItemsSource = query.ToList();
+        //}
+
+        private void LoadButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (LocalSelected == null)
+            {
+                MessageBox.Show("Select a save");
+            }
+            else
+            {
+                App.SaveSelected = LocalSelected;
+                Load(LocalSelected);
+                //MainTabControl.SelectedIndex = 0;
+                //SavesControl.ItemsSource = App.Context.Saves.ToList();
+            }
+        }
+
+        private void SaveImgPrev_Checked(object sender, RoutedEventArgs e)
+        {
+            var button = sender as RadioButton;
+            var image = button.DataContext as Models.ImageModel;
+            Debug.WriteLine($"Image: {image.Id}");
+            if (image != null)
+            {
+                WindowGrid.DataContext = image;
+            }
+        }
+
+        private void RemoveImageFromSave_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var image = button.DataContext as Models.ImageModel;
+            var SaveList = (from s in App.Context.Saves
+                           where s.Id == LocalSelected.Id
+                           join savelist in App.Context.SaveLists on s.Id equals savelist.Save
+                           join images in App.Context.Images on savelist.Image equals images.Id
+                           select images).ToList();
+            if (image != null)
+            {
+                var img = SaveList.Find(x => x == image);
+                var index = SaveList.IndexOf(img);
+                var going = Check(index, -1);
+                if (!(going < 0))
+                {
+                    //var uiElement = SaveImages.ItemContainerGenerator.ContainerFromIndex(going);
+                    //var child = VisualTreeHelper.GetChild(uiElement, 0);
+                    //var rbutton = child as RadioButton;
+                    //rbutton.IsChecked = true;
+                }
+                var SaveCons = (from saves in App.Context.SaveLists
+                               where saves.Save == LocalSelected.Id
+                               && saves.Image == image.Id
+                               select saves).FirstOrDefault();
+                if (SaveCons != null)
+                {
+                    App.Context.SaveLists.Remove(SaveCons);
+                    App.Context.SaveChanges();
+                }
+            }
+            var query = from s in App.Context.Saves
+                        where s.Id == LocalSelected.Id
+                        join savelist in App.Context.SaveLists on s.Id equals savelist.Save
+                        join images in App.Context.Images on savelist.Image equals images.Id
+                        select images;
+            //SaveImages.ItemsSource = query.ToList();
+            
         }
     }
 }

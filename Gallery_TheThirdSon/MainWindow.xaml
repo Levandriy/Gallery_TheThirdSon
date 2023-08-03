@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="650" Width="600" Loaded="Window_Loaded" MouseDoubleClick="Window_MouseDoubleClick" Foreground="White" SnapsToDevicePixels="True">
     <Grid x:Name="WindowGrid" ClipToBounds="True" DataContext="{Binding}" DataContextChanged="WindowGrid_DataContextChanged">
+        <Grid.Background>
+            <SolidColorBrush Color="Black" Opacity="0.24"/>
+        </Grid.Background>
         <Image x:Name="BackGroundImage" Source="{Binding Data}" Stretch="UniformToFill" Margin="-40">
             <Image.Effect>
                 <BlurEffect Radius="20"/>
@@ -17,121 +20,233 @@
                 <BlurEffect Radius="20"/>
             </Rectangle.Effect>
         </Rectangle>
-        <TabControl Background="Transparent" BorderBrush="Transparent">
-            <TabItem Style="{DynamicResource DefaultTabItemStyle}" Header="Media">
-                <Grid x:Name="MainGrid">
-                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="60,0,60,140">
-                        <Border>
-                            <Border.Effect>
-                                <DropShadowEffect RenderingBias="Quality" BlurRadius="30" ShadowDepth="0" Opacity="1" Color="#FF333333"/>
-                            </Border.Effect>
-                            <Grid>
-                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,40">
-                                    <Image x:Name="MainImage" Source="{Binding Data}"/>
-                                    <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Top">
-                                        <WrapPanel.Background>
-                                            <SolidColorBrush Color="White" Opacity=".48"/>
-                                        </WrapPanel.Background>
-                                        <Button x:Name="EditImageButton" Style="{StaticResource ToolButton}" Width="20" Height="20" Click="EditImageButton_Click">
-                                            <Button.OpacityMask>
-                                                <ImageBrush ImageSource="/EditIcon.png" Stretch="Uniform"/>
-                                            </Button.OpacityMask>
-                                        </Button>
-                                        <Button x:Name="RemoveImageButton" Style="{StaticResource ToolButton}" Width="20" Height="20" Click="RemoveImageButton_Click">
-                                            <Button.OpacityMask>
-                                                <ImageBrush ImageSource="/RemoveIcon.png" Stretch="Uniform"/>
-                                            </Button.OpacityMask>
-                                        </Button>
-                                    </WrapPanel>
-                                </Grid>
-                                <ItemsControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="40">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <WrapPanel Orientation="Horizontal"/>
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Style="{DynamicResource DefaultTextBlockStyle}" Text="{Binding Title}"/>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                    <ItemsControl.ItemsSource>
-                                        <CompositeCollection>
-                                            <TextBlock Style="{DynamicResource DefaultTextBlockStyle}" Text="{Binding Title}"/>
-                                            <CollectionContainer x:Name="TagsCollection" Collection="{Binding}"/>
-                                        </CompositeCollection>
-                                    </ItemsControl.ItemsSource>
-                                </ItemsControl>
-                            </Grid>
-                        </Border>
+        <Grid x:Name="MainGrid" Margin="0,40,0,0">
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="60,0,60,140">
+                <Border>
+                    <Border.Effect>
+                        <DropShadowEffect RenderingBias="Quality" BlurRadius="30" ShadowDepth="0" Opacity="1" Color="#FF333333"/>
+                    </Border.Effect>
+                    <Grid>
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,40">
+                            <Image x:Name="MainImage" Source="{Binding Data}"/>
+                            <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Top">
+                                <WrapPanel.Background>
+                                    <SolidColorBrush Color="White" Opacity=".48"/>
+                                </WrapPanel.Background>
+                                <Button x:Name="EditImageButton" Style="{StaticResource ToolButton}" Width="20" Height="20" Click="EditImageButton_Click">
+                                    <Button.OpacityMask>
+                                        <ImageBrush ImageSource="/EditIcon.png" Stretch="Uniform"/>
+                                    </Button.OpacityMask>
+                                </Button>
+                                <Button x:Name="RemoveImageButton" Style="{StaticResource ToolButton}" Width="20" Height="20" Click="RemoveImageButton_Click">
+                                    <Button.OpacityMask>
+                                        <ImageBrush ImageSource="/RemoveIcon.png" Stretch="Uniform"/>
+                                    </Button.OpacityMask>
+                                </Button>
+                            </WrapPanel>
+                        </Grid>
+                        <ItemsControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="40">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Style="{DynamicResource DefaultTextBlockStyle}" Text="{Binding Title}"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsSource>
+                                <CompositeCollection>
+                                    <TextBlock Style="{DynamicResource DefaultTextBlockStyle}" Text="{Binding Title}"/>
+                                    <CollectionContainer x:Name="TagsCollection" Collection="{Binding}"/>
+                                </CompositeCollection>
+                            </ItemsControl.ItemsSource>
+                        </ItemsControl>
                     </Grid>
-                    <Grid x:Name="BottomPanel" VerticalAlignment="Bottom" Margin="0,0,0,0" Height="140">
-                        <Button x:Name="Add" Click="Add_Click" Style="{DynamicResource ToolButton}" Margin="20" HorizontalAlignment="Left">
-                            <Button.OpacityMask>
-                                <ImageBrush ImageSource="/AddPhotoIcon.png" Stretch="UniformToFill">
-                                    <ImageBrush.RelativeTransform>
-                                        <TransformGroup>
-                                            <ScaleTransform CenterY="0.5" CenterX="0.5" ScaleX="0.7" ScaleY="0.7"/>
-                                            <SkewTransform CenterX="0.5" CenterY="0.5"/>
-                                            <RotateTransform CenterX="0.5" CenterY="0.5"/>
-                                            <TranslateTransform/>
-                                        </TransformGroup>
-                                    </ImageBrush.RelativeTransform>
-                                </ImageBrush>
-                            </Button.OpacityMask>
-                        </Button>
-                        <Button x:Name="Previous" Style="{DynamicResource ToolButton}" Width="20" Height="20" HorizontalAlignment="Left" Margin="80,20,80,20" Click="Previous_Click">
-                            <Button.OpacityMask>
-                                <ImageBrush ImageSource="/arrow-previous-left-icon.png" Stretch="Uniform"/>
-                            </Button.OpacityMask>
-                        </Button>
-                        <Grid VerticalAlignment="Stretch"
-                      HorizontalAlignment="Stretch"
-                      Margin="100,0,100,0">
-                            <ItemsControl x:Name="ItemsGrid" ItemsSource="{Binding}">
-                                <ItemsControl.Template>
-                                    <ControlTemplate>
-                                        <ScrollViewer x:Name="PreviewScrolViewer"
+                </Border>
+            </Grid>
+            <Grid x:Name="BottomPanel" VerticalAlignment="Bottom" Margin="0,0,0,0" Height="140">
+                <Button x:Name="Add" Click="Add_Click" Style="{DynamicResource ToolButton}" Margin="20" HorizontalAlignment="Left">
+                    <Button.OpacityMask>
+                        <ImageBrush ImageSource="/AddPhotoIcon.png" Stretch="UniformToFill">
+                            <ImageBrush.RelativeTransform>
+                                <TransformGroup>
+                                    <ScaleTransform CenterY="0.5" CenterX="0.5" ScaleX="0.7" ScaleY="0.7"/>
+                                    <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                                    <RotateTransform CenterX="0.5" CenterY="0.5"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </ImageBrush.RelativeTransform>
+                        </ImageBrush>
+                    </Button.OpacityMask>
+                </Button>
+                <Button x:Name="Previous" Style="{DynamicResource ToolButton}" Width="20" Height="20" HorizontalAlignment="Left" Margin="80,20,80,20" Click="Previous_Click">
+                    <Button.OpacityMask>
+                        <ImageBrush ImageSource="/arrow-previous-left-icon.png" Stretch="Uniform"/>
+                    </Button.OpacityMask>
+                </Button>
+                <Grid VerticalAlignment="Stretch"
+                                HorizontalAlignment="Stretch"
+                                Margin="100,0,100,0">
+                    <ItemsControl x:Name="ItemsGrid" ItemsSource="{Binding}">
+                        <ItemsControl.Template>
+                            <ControlTemplate>
+                                <ScrollViewer x:Name="PreviewScrolViewer"
+                                                      HorizontalScrollBarVisibility="Hidden"
+                                                      VerticalScrollBarVisibility="Hidden"
+                                                      PanningMode="HorizontalFirst"
+                                                      Padding="5"
+                                                      PreviewMouseWheel="PreviewScrolViewer_PreviewMouseWheel">
+                                    <ItemsPresenter/>
+                                </ScrollViewer>
+                            </ControlTemplate>
+                        </ItemsControl.Template>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <RadioButton x:Name="Image" Style="{DynamicResource ImageIcon}" Width="70" Height="70" GroupName="Images" Checked="Image_Checked">
+                                    <RadioButton.Background>
+                                        <ImageBrush ImageSource="{Binding Data, Mode=OneWay}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="LowQuality"/>
+                                    </RadioButton.Background>
+                                </RadioButton>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+                <Button x:Name="Next" Style="{DynamicResource ToolButton}" Width="20" Height="20" HorizontalAlignment="Right" Margin="80,20,80,20" Click="Next_Click">
+                    <Button.OpacityMask>
+                        <ImageBrush ImageSource="/arrow-next-right-icon.png" Stretch="Uniform"/>
+                    </Button.OpacityMask>
+                </Button>
+            </Grid>
+        </Grid>
+        <!--<TabControl x:Name="MainTabControl" Background="Transparent" BorderBrush="Transparent">
+            <TabItem Style="{DynamicResource DefaultTabItemStyle}" Header="Media">
+                <TabItem.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.24"/>
+                </TabItem.Background>-->
+            <!--</TabItem>
+            <TabItem Header="Tags" Style="{DynamicResource DefaultTabItemStyle}">
+                <TabItem.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.24"/>
+                </TabItem.Background>
+            </TabItem>
+            <TabItem Header="Saves" Style="{DynamicResource DefaultTabItemStyle}">
+                <TabItem.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.24"/>
+                </TabItem.Background>
+                <Grid x:Name="SavesGrid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Rectangle Grid.ColumnSpan="2" Grid.RowSpan="2" Fill="White" Opacity="0.24"/>
+                    <ScrollViewer Grid.Column="0" Grid.RowSpan="2" VerticalScrollBarVisibility="Hidden">
+                        <ItemsControl x:Name="SavesControl">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Margin="10"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <RadioButton x:Name="Select" Checked="Select_Checked" GroupName="Saves" Style="{DynamicResource SaveLoadRBStyle}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Title}" Style="{DynamicResource DefaultTextBlockStyle}"/>
+                                            <TextBlock Text="{Binding DateCreated, StringFormat=Created: \{0:dd.MM.yyyy\}}" Style="{DynamicResource DefaultTextBlockStyle}"/>
+                                            <TextBlock Text="{Binding DateUpdated, StringFormat=Updated: \{0:dd.MM.yyyy\}}" Style="{DynamicResource DefaultTextBlockStyle}"/>
+                                        </StackPanel>
+                                    </RadioButton>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    <Grid Grid.Column="1" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <WrapPanel Name ="container">
+                            <Image Source="{Binding Data}" Stretch="Uniform"/>
+                            <WrapPanel.OpacityMask>
+                                <VisualBrush >
+                                    <VisualBrush.Visual>
+                                        <Border Height="{Binding ElementName=container, Path=ActualHeight}" 
+                                                Width="{Binding ElementName=container, Path=ActualWidth}"
+                                                Background="White" CornerRadius="15" />
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </WrapPanel.OpacityMask>
+                        </WrapPanel>
+                    </Grid>
+                    <ItemsControl Grid.Column="1" Grid.Row="1" x:Name="SaveImages" ItemsSource="{Binding}">
+                        --><!--<ItemsControl.Template>
+                            <ControlTemplate>
+                                <ScrollViewer x:Name="PreviewScrolViewer"
                                               HorizontalScrollBarVisibility="Hidden"
                                               VerticalScrollBarVisibility="Hidden"
                                               PanningMode="HorizontalFirst"
                                               Padding="5"
                                               PreviewMouseWheel="PreviewScrolViewer_PreviewMouseWheel">
-                                            <ItemsPresenter/>
-                                        </ScrollViewer>
-                                    </ControlTemplate>
-                                </ItemsControl.Template>
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10"/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <RadioButton x:Name="Image" Style="{DynamicResource ImageIcon}" GroupName="Images" Checked="Image_Checked">
-                                            <RadioButton.Background>
-                                                <ImageBrush ImageSource="{Binding Data, Mode=OneWay}" Stretch="UniformToFill"/>
-                                            </RadioButton.Background>
-                                        </RadioButton>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </Grid>
-                        <Button x:Name="Next" Style="{DynamicResource ToolButton}" Width="20" Height="20" HorizontalAlignment="Right" Margin="80,20,80,20" Click="Next_Click">
-                            <Button.OpacityMask>
-                                <ImageBrush ImageSource="/arrow-next-right-icon.png" Stretch="Uniform"/>
-                            </Button.OpacityMask>
-                        </Button>
+                                    <ItemsPresenter/>
+                                </ScrollViewer>
+                            </ControlTemplate>
+                        </ItemsControl.Template>--><!--
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" Margin="10"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <RadioButton x:Name="SaveImgPrev" Style="{DynamicResource ImageIcon}" Width="120" Height="120" GroupName="SaveImages" Checked="SaveImgPrev_Checked">
+                                    <RadioButton.Background>
+                                        <ImageBrush ImageSource="{Binding Data, Mode=OneWay}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="LowQuality"/>
+                                    </RadioButton.Background>
+                                    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                        <Border BorderThickness="0" CornerRadius="0,0,15,0" VerticalAlignment="Top" HorizontalAlignment="Right">
+                                            <WrapPanel>
+                                                <WrapPanel.Background>
+                                                    <SolidColorBrush Color="White" Opacity=".48"/>
+                                                </WrapPanel.Background>
+                                                <Button x:Name="EditImageButton" Style="{StaticResource ToolButton}" Width="20" Height="20" Click="EditImageButton_Click">
+                                                    <Button.OpacityMask>
+                                                        <ImageBrush ImageSource="/EditIcon.png" Stretch="Uniform"/>
+                                                    </Button.OpacityMask>
+                                                </Button>
+                                                <Button x:Name="RemoveImageFromSave" Style="{StaticResource ToolButton}" Width="20" Height="20" Click="RemoveImageFromSave_Click">
+                                                    <Button.OpacityMask>
+                                                        <ImageBrush ImageSource="/RemoveIcon.png" Stretch="Uniform"/>
+                                                    </Button.OpacityMask>
+                                                </Button>
+                                            </WrapPanel>
+                                        </Border>
+                                    </Grid>
+                                </RadioButton>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <Grid Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="220"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="Title" Grid.ColumnSpan="2" Style="{DynamicResource SrcTBStyle}" Height="40"/>
+                        <WrapPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Button x:Name="LoadButton" Content="Load" Click="LoadButton_Click" Margin="5,10,5,10" Padding="15,0,15,0" Style="{DynamicResource DefaultButtonStyle}"/>
+                            <Button x:Name="SaveButton" Content="Save" Click="SaveButton_Click" Margin="5,10,5,10" Padding="15,0,15,0" Style="{DynamicResource DefaultButtonStyle}"/>
+                        </WrapPanel>
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem Header="Tags" Style="{DynamicResource DefaultTabItemStyle}">
-
-            </TabItem>
-            <TabItem Header="Saves" Style="{DynamicResource DefaultTabItemStyle}">
-
-            </TabItem>
-        </TabControl>
+        </TabControl>-->
         
     </Grid>
 </Window>

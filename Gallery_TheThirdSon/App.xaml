@@ -559,7 +559,7 @@
             <Setter Property="BorderBrush" Value="Gray"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Padding" Value="5"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="Black"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -583,12 +583,12 @@
                                 <Setter Property="Padding" Value="4,-1,0,0"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Background" TargetName="border" Value="White"/>
-                                <Setter Property="Foreground" Value="Black"/>
+                                <Setter Property="Background" TargetName="border" Value="Black"/>
+                                <Setter Property="Foreground" Value="White"/>
                             </Trigger>
                             <Trigger Property="IsChecked" Value="true">
-                                <Setter Property="Background" TargetName="border" Value="White"/>
-                                <Setter Property="Foreground" Value="Black"/>
+                                <Setter Property="Background" TargetName="border" Value="Black"/>
+                                <Setter Property="Foreground" Value="White"/>
                                 <Setter Property="Opacity" TargetName="border" Value="1"/>
                             </Trigger>
                             <Trigger Property="IsChecked" Value="False">
@@ -824,8 +824,6 @@
             </Style.Triggers>
         </Style>
         <Style x:Key="ImageIcon" TargetType="{x:Type RadioButton}">
-            <Setter Property="Width" Value="70"/>
-            <Setter Property="Height" Value="70"/>
             <Setter Property="Margin" Value="10,10,0,0"/>
             <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
             <Setter Property="BorderBrush" Value="Black"/>
